@@ -33,5 +33,10 @@
 *.pyc
 
 # other
+Makefile
 mbed_settings.py
-
+GettingStarted.html
+mbed_config.h
+build*
+BUILD*
+.vscode/*

@@ -1,1 +1,3 @@
 ROOT=.
+TARGET=disco_f407vg
+TOOLCHAIN=gcc_arm
