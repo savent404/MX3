@@ -1,0 +1,13 @@
+mbed-os/features/filesystem/fat/*
+
+mbed-os/features/cellular/*
+mbed-os/features/nvstore/*
+mbed-os/features/mbedtls/*
+mbed-os/features/cryptocell/*
+mbed-os/features/device_key/*
+mbed-os/features/netsocket/*
+mbed-os/features/FEATURE_LWIP/*
+mbed-os/features/FEATURE_BLE/*
+mbed-os/features/FEATURE_UVISOR/*
+mbed-os/features/lorawan/*
+mbed-os/features/nanostack/*
