@@ -4,17 +4,14 @@
 #include "ff.h"
 #include "iAudio.h"
 #include "mbed.h"
+#include "rtos.h"
 
 #ifndef MAX_TRACK_NUM
 #define MAX_TRACK_NUM (3)
 #endif
 
-#ifndef CIR_BUFFER_SIZE
-#define CIR_BUFFER_SIZE (512)
-#endif
-
 #ifndef BLOCK_BUFFER_SIZE
-#define BLOCK_BUFFER_SIZE (CIR_BUFFER_SIZE / 2)
+#define BLOCK_BUFFER_SIZE (512)
 #endif
 
 #define WAV_FIXED_SAMPLE_FREQ (220500)
@@ -22,25 +19,30 @@
 #define CONVERT_TIME_2_SIZE(ms)   (WAV_FIXED_SAMPLE_FREQ * ms / 1000 * WAV_FIXED_DATA_DEPTH)
 #define CONVERT_SIZE_2_TIME(size) (size * 1000 / WAV_FIXED_DATA_DEPTH / WAV_FIXED_SAMPLE_FREQ)
 
+typedef struct BMail
+{
+    uint16_t d[BLOCK_BUFFER_SIZE];
+} BMail;
+
 class pAudio : public iAudio {
 private:
     Queue<int, 4> queue;
-    Thread t;
-    char path[MAX_TRACK_NUM][32];
-    FIL  file[MAX_TRACK_NUM];
-    mode_t mode[MAX_TRACK_NUM];
-    Mutex mutex[MAX_TRACK_NUM];
+    Mail<BMail, 3> mail;
 
-    uint16_t cBuffer[CIR_BUFFER_SIZE];
-    int16_t bBuffer[MAX_TRACK_NUM][BLOCK_BUFFER_SIZE];
-    int16_t mirror_cBuffer[BLOCK_BUFFER_SIZE];
+    FIL file[MAX_TRACK_NUM];
+
+    Thread readThread;
+    Thread fifoThread;
+
+    int ansBuffer[BLOCK_BUFFER_SIZE];
+    int16_t tmpBuffer[BLOCK_BUFFER_SIZE];
 
 protected:
     int allocTrack(int trackID, const char* filePath, mode_t mode);
     void dellocTrack(int trackID);
-    inline void dataConvert(uint16_t* dest, int16_t *src, int size);
-    inline void dataComb(int16_t* dest, int16_t* src);
-    void thandle();
+    inline void dataConvert(uint16_t* dest, int *src, int size);
+
+    bool isIdle(void);
 public:
     pAudio(const iParam* p);
 
@@ -48,7 +50,8 @@ public:
     virtual bool abort(trackId_t id);
     virtual uint32_t getTrackDuration(trackId_t id);
 
-    void handle(int sig);
+    void read_handle();
+    void fifo_handle();
 };
 
 extern "C" void HAL_DAC_ConvCpltCallbackCh1(DAC_HandleTypeDef *hdac);

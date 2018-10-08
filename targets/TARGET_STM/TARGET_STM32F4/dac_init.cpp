@@ -43,7 +43,7 @@ void MX_TIM7_Init(void)
   htim7.Instance = TIM7;
   htim7.Init.Prescaler = 0;
   htim7.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim7.Init.Period = 1999;
+  htim7.Init.Period = 3999;
   if (HAL_TIM_Base_Init(&htim7) != HAL_OK)
   {
   }
@@ -94,7 +94,8 @@ void HAL_DAC_MspInit(DAC_HandleTypeDef* dacHandle)
     hdma_dac1.Init.MemInc = DMA_MINC_ENABLE;
     hdma_dac1.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
     hdma_dac1.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;
-    hdma_dac1.Init.Mode = DMA_CIRCULAR;
+//    hdma_dac1.Init.Mode = DMA_CIRCULAR;
+    hdma_dac1.Init.Mode = DMA_NORMAL;
     hdma_dac1.Init.Priority = DMA_PRIORITY_LOW;
     hdma_dac1.Init.FIFOMode = DMA_FIFOMODE_DISABLE;
     if (HAL_DMA_Init(&hdma_dac1) != HAL_OK)
