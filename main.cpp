@@ -1,6 +1,7 @@
 #include "ff.h"
 #include "mbed.h"
 
+#include "dac_init.h"
 #include "sdio_init.h"
 #include "iparam_port.h"
 
@@ -17,7 +18,8 @@ int main(void)
     __SDIO_Init();
     res = f_mount(&fatfs_sd, "0:/", 1);
 
-    pParam(0);
+    pParam *pP = new pParam(0);
+    pAudio *pA = new pAudio(pP);
     while (1);
 
     return 0;
