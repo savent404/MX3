@@ -9,6 +9,7 @@ pParam::pParam(int bank) : iParam(bank)
     numBank = searchFileCnt(workPath.c_str(), "[Bb][Aa][Nn][Kk]*");
     
     intParam.resize(sizeof(typeIntParam) / sizeof(string));
+    floatParam.resize(sizeof(typeFloatParam) / sizeof(string));
 
     /** Read static parameter */
     if (readStaticParameter() && (size_t(getBankNum()) == staticParam.configRGBIndex.size())) {
