@@ -44,7 +44,8 @@ public:
         tFallK1 = 0;
         tRiseK2 = 0;
         tFallK2 = 0;
-
+        duration[0] = 0;
+        duration[1] = 0;
         k1.rise(callback(this, &pKey::rise_key1));
         k1.fall(callback(this, &pKey::fall_key1));
         k2.rise(callback(this, &pKey::rise_key2));
