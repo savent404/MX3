@@ -189,7 +189,12 @@ void pAudio::dataConvert(uint16_t* dest, int *src, int size)
 
     for (i = 0; i < size; i++)
     {
-        t = *src++ + offset;
+        // convert 16-bit->12-bit
+        t = *src++ >> 4;
+        
+        // convert signed->unsinged
+        t = t + offset;
+        
         if (t > 0xFFF)
             t = 0xFFF;
         else if (t < 0)
