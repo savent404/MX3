@@ -11,7 +11,7 @@
 #endif
 
 #ifndef BLOCK_BUFFER_SIZE
-#define BLOCK_BUFFER_SIZE (512)
+#define BLOCK_BUFFER_SIZE (256)
 #endif
 
 #define WAV_FIXED_SAMPLE_FREQ (220500)
