@@ -40,3 +40,9 @@ mbed_config.h
 build*
 BUILD*
 .vscode/*
+
+# qt creator
+*.config
+*.creator
+*.files
+*.includes
