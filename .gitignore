@@ -37,3 +37,6 @@ build*
 
 # qt user file
 *.user
+
+# cmake build dir
+*build*/
